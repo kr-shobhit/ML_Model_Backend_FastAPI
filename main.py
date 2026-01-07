@@ -1,10 +1,13 @@
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 from validation.data_validation import UserInput
 import pickle
 import pandas as pd
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 with open("model/model.pkl", "rb") as f:
     model = pickle.load(f)
@@ -12,6 +15,10 @@ with open("model/model.pkl", "rb") as f:
 @app.get("/")
 def home():
     return {"message":"Using Machine Learning Model with Fast API"}
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return FileResponse("static/favicon.ico")
 
 @app.post("/predict")
 def predict_premium(data: UserInput):

@@ -1,2 +1,19 @@
-*.venv
-*__pycache__
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv/
+venv/
+frontend/__pycache__
+validation/__pycache__
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Docker
+*.log
+
+# OS
+.DS_Store
